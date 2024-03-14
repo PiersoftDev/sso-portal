@@ -8,6 +8,7 @@ import { getStoredAuthToken } from '../shared/utils/authToken'
 
 const Authenticate = () => {
   const [mobileNumber, setMobileNumber] = useState('')
+  const [sessionToken, setSessionToken] = useState('')
 
   const history = useHistory()
 
@@ -25,11 +26,22 @@ const Authenticate = () => {
       // history.push('/')
     }
 
-    if (getStoredAuthToken()) {
+    if (
+      getStoredAuthToken('idToken') &&
+      getStoredAuthToken('accessToken') &&
+      getStoredAuthToken('refreshToken')
+    ) {
       history.push('/')
     }
-    console.log('history changed')
   }, [history])
+
+  if (
+    getStoredAuthToken('idToken') &&
+    getStoredAuthToken('accessToken') &&
+    getStoredAuthToken('refreshToken')
+  ) {
+    return <div>Loading</div>
+  }
 
   return (
     <AuthenticationWrapper>
@@ -37,9 +49,17 @@ const Authenticate = () => {
       <img src={logo} alt="Kmv logo" className="kmv-logo" />
       <div className="authenticate-card">
         {mobileNumber ? (
-          <Otp mobileNumber={mobileNumber} setMobileNumber={setMobileNumber} />
+          <Otp
+            mobileNumber={mobileNumber}
+            setMobileNumber={setMobileNumber}
+            sessionToken={sessionToken}
+            setSessionToken={setSessionToken}
+          />
         ) : (
-          <Login setMobileNumber={setMobileNumber} />
+          <Login
+            setMobileNumber={setMobileNumber}
+            setSessionToken={setSessionToken}
+          />
         )}
       </div>
     </AuthenticationWrapper>

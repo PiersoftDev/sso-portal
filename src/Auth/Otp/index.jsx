@@ -5,10 +5,18 @@ import OtpWrapper from './styles'
 import { IoArrowBack } from 'react-icons/io5'
 import { useHistory } from 'react-router-dom'
 import { storeAuthToken } from '../../shared/utils/authToken'
+import { toast } from 'react-toastify'
+import Axios from 'axios'
+import { otpToString } from '../../shared/utils/otp'
 
 const otpLength = 6
 
-const Otp = ({ mobileNumber, setMobileNumber }) => {
+const Otp = ({
+  mobileNumber,
+  setMobileNumber,
+  sessionToken,
+  setSessionToken,
+}) => {
   const history = useHistory()
   const [otp, setOTP] = useState(Array(otpLength).fill(''))
   const [submitOtpIsLoading, setSubmitOtpIsLoading] = useState(false)
@@ -16,20 +24,51 @@ const Otp = ({ mobileNumber, setMobileNumber }) => {
   const handleBack = () => {
     setOTP(Array(otpLength).fill(''))
     setMobileNumber('')
+    setSessionToken('')
     console.log('handle back btn pressed')
   }
 
-  const reSendOpt = async () => {
+  const verifyUser = async (reqBody) => {
+    try {
+      const resp = await Axios.post(
+        'https://user.p360.build/v1/user/verify',
+        reqBody
+      )
+      const { accessToken, refreshToken, idToken } = resp.data
+      storeAuthToken('accessToken', accessToken)
+      storeAuthToken('refreshToken', refreshToken)
+      storeAuthToken('idToken', idToken)
+      history.push('/')
+    } catch (error) {
+      console.log(error)
+      toast.error('some error occured while verifying user')
+    }
+  }
+
+  const reSendOtp = async () => {
     setOTP(Array(otpLength).fill(''))
     console.log('resend otp method called')
   }
   const handleOtpSubmit = async () => {
     console.log('handle submit otp method called')
-    console.log(otp)
-    if (otp.filter((box) => box !== '').length == 6) {
-      history.push('/')
-      storeAuthToken('dummy1243')
+
+    if (otp.filter((box) => box !== '').length != 6) {
+      toast.error('please enter all the 6 digits in otp')
+      return
     }
+
+    // history.push('/')
+    // storeAuthToken('dummy1243')
+
+    const reqbody = {
+      session: sessionToken,
+      username: `+91${mobileNumber}`,
+      confirmationCode: otp.join(''),
+    }
+    console.log(reqbody)
+    otpToString(otp)
+
+    await verifyUser(reqbody)
   }
 
   return (
@@ -61,7 +100,7 @@ const Otp = ({ mobileNumber, setMobileNumber }) => {
         </button>
       </div>
       <div className="card-footer">
-        Didn't receive the code? <span onClick={reSendOpt}>Resend</span>
+        Didn't receive the code? <span onClick={reSendOtp}>Resend</span>
       </div>
     </OtpWrapper>
   )

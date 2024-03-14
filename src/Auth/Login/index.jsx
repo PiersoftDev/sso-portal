@@ -4,8 +4,25 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import LogInWrapper from './styles'
+import { toast } from 'react-toastify'
+import Axios from 'axios'
 
-const Login = ({ setMobileNumber }) => {
+const Login = ({ setMobileNumber, setSessionToken }) => {
+  const handleLogIn = async (phoneNumber) => {
+    try {
+      const resp = await Axios.post(
+        `https://user.p360.build/v1/user/login/+91${phoneNumber}`
+      )
+      setSessionToken(resp.data.data)
+      setMobileNumber(phoneNumber)
+    } catch (error) {
+      console.log(error)
+      toast.error(
+        'some error occured while trying to login with the user phone number '
+      )
+    }
+  }
+
   return (
     <LogInWrapper>
       <div className="card-header">
@@ -28,8 +45,8 @@ const Login = ({ setMobileNumber }) => {
               .matches(/^[0-9]{10}$/, 'Mobile number must be 10 digits')
               .required('Mobile number is required'),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            setMobileNumber(values.phoneNumber)
+          onSubmit={async (values, { setSubmitting }) => {
+            await handleLogIn(values.phoneNumber)
             setSubmitting(false)
           }}
         >
@@ -53,6 +70,7 @@ const Login = ({ setMobileNumber }) => {
                     value={values.phoneNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    autocomplete="off"
                   />
                 </div>
                 <div className="error-message">
