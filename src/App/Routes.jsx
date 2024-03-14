@@ -16,15 +16,21 @@ const Routes = () => (
       <Route path="/projects" component={Dashboard} />
       <Route
         path={`/features`}
-        render={() => <div className="not-implemented"> Not Features </div>}
+        render={() => (
+          <div className="not-implemented"> Features Not Implemented </div>
+        )}
       />
       <Route
         path={`/pricing`}
-        render={() => <div className="not-implemented"> Not pricing </div>}
+        render={() => (
+          <div className="not-implemented"> pricing Not Implemented </div>
+        )}
       />
       <Route
         path={`/settings`}
-        render={() => <div className="not-implemented"> Not setting </div>}
+        render={() => (
+          <div className="not-implemented"> setting Not Implemented </div>
+        )}
       />
       {/* <Route path={`${match.path}/`} render={() => <div> Projects </div>} /> */}
       <Route component={PageError} />

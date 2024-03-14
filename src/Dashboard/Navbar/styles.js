@@ -31,6 +31,8 @@ const NavbarContainer = styled.div`
   .nav-link {
     color: var(--grey-500);
     letter-spacing: 1px;
+    position: relative;
+    padding: 1 0.5rem;
   }
 
   .profile-container {

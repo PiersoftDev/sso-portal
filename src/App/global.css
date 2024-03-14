@@ -293,8 +293,17 @@ ul {
 .not-implemented {
   text-align: center;
   padding: 20rem 0;
-  font-size: 5rem;
+  font-size: 3rem;
   text-transform: capitalize;
   letter-spacing: 2px;
   color: var(--grey-500);
+}
+
+.active .underline {
+  border: none;
+  border-bottom: 3px solid var(--primary-500);
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 2.8rem;
 }

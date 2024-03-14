@@ -9,9 +9,9 @@ import NavbarContainer from './styles'
 const Navbar = () => {
   return (
     <NavbarContainer>
-      <div className="company-logo-container">
+      <NavLink to="/" className="company-logo-container">
         <img src={companyLogo} alt="Kmv" className="company-logo" />
-      </div>
+      </NavLink>
 
       <ul className="links-container">
         {navLinks.map((link, index) => {
@@ -25,6 +25,7 @@ const Navbar = () => {
               to={path}
             >
               <p>{text}</p>
+              <div className="underline"></div>
             </NavLink>
           )
         })}
@@ -51,7 +52,7 @@ const Navbar = () => {
 const navLinks = [
   {
     id: 1,
-    path: '/',
+    path: '/projects',
     text: 'Home',
   },
   {
