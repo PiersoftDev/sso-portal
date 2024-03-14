@@ -9,30 +9,10 @@ import Navbar from '../Dashboard/Navbar'
 
 const Routes = () => (
   <Router history={history}>
-    <Navbar />
     <Switch>
       <Redirect exact from="/" to="/projects" />
       <Route path="/authenticate" component={Authenticate} />
-      <Route path="/projects" component={Dashboard} />
-      <Route
-        path={`/features`}
-        render={() => (
-          <div className="not-implemented"> Features Not Implemented </div>
-        )}
-      />
-      <Route
-        path={`/pricing`}
-        render={() => (
-          <div className="not-implemented"> pricing Not Implemented </div>
-        )}
-      />
-      <Route
-        path={`/settings`}
-        render={() => (
-          <div className="not-implemented"> setting Not Implemented </div>
-        )}
-      />
-      {/* <Route path={`${match.path}/`} render={() => <div> Projects </div>} /> */}
+      <Route path="/" component={Dashboard} />
       <Route component={PageError} />
     </Switch>
   </Router>

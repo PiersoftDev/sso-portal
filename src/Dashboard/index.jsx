@@ -13,24 +13,36 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="projects-container">
-        <Header search={search} setSearch={setSearch} />
-        <List search={search} />
-      </div>
+      <Navbar />
 
       <Route
-        path={`${match.path}/features`}
-        render={() => <div> Features </div>}
+        path={`/projects`}
+        render={() => (
+          <div className="projects-container">
+            <Header search={search} setSearch={setSearch} />
+            <List search={search} />
+          </div>
+        )}
       />
       <Route
-        path={`${match.path}/pricing`}
-        render={() => <div> pricing </div>}
+        path={`/features`}
+        render={() => (
+          <div className="not-implemented"> Features Not Implemented </div>
+        )}
       />
       <Route
-        path={`${match.path}/setting`}
-        render={() => <div> setting </div>}
+        path={`/pricing`}
+        render={() => (
+          <div className="not-implemented"> pricing Not Implemented </div>
+        )}
       />
-      <Route path={`${match.path}/`} render={() => <div> Projects </div>} />
+      <Route
+        path={`/settings`}
+        render={() => (
+          <div className="not-implemented"> setting Not Implemented </div>
+        )}
+      />
+      {/* <Route path={`${match.path}/`} render={() => <div> Projects </div>} /> */}
     </div>
   )
 }
