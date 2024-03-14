@@ -8,6 +8,7 @@ const ListContainer = styled.div`
   width: 90%;
   margin: 0 auto;
   max-width: 1200px;
+  padding-bottom: 5rem;
 
   .project-card {
     background-color: var(--white);
