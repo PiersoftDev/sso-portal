@@ -70,7 +70,7 @@ const Login = ({ setMobileNumber, setSessionToken }) => {
                     value={values.phoneNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                 </div>
                 <div className="error-message">

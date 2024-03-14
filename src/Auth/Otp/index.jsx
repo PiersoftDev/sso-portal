@@ -46,8 +46,19 @@ const Otp = ({
   }
 
   const reSendOtp = async () => {
-    setOTP(Array(otpLength).fill(''))
-    console.log('resend otp method called')
+    try {
+      const resp = await Axios.post(
+        `https://user.p360.build/v1/user/login/+91${mobileNumber}`
+      )
+      setSessionToken(resp.data.data)
+      setOTP(Array(otpLength).fill(''))
+      toast.success('Otp sent successully again')
+    } catch (error) {
+      console.log(error)
+      toast.error(
+        'some error occured while trying to login with the user phone number '
+      )
+    }
   }
   const handleOtpSubmit = async () => {
     console.log('handle submit otp method called')

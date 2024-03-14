@@ -67,6 +67,7 @@ const OtpWrapper = styled.div`
   .card-footer span {
     color: var(--primary-500);
     font-weight: 500;
+    cursor: pointer;
   }
 `
 export default OtpWrapper
